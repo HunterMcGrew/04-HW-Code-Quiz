@@ -23,15 +23,18 @@ var quizQuestions = [
         title: "What does the CONST variable do?",
         options: ["Stores data that can change", "Constructs your JavaScript", "Stores unchangable data", "Starts a function"],
         answer: "Stores unchangable data"
-    }, 
+    } 
 ];
 
-var startBtn = document.querySelector("#startBtn");
-var timerEl = document.querySelector("#timer");
-var game = document.querySelector("#game");
-var gameH1 = document.querySelector("#h1");
-var gameP = document.querySelector("#p");
-var optionsUl = document.querySelector("#optionsUl");
+var startBtn = document.getElementById("startBtn");
+var timerEl = document.getElementById("timer");
+var game = document.getElementById("game");
+var gameH1 = document.getElementById("h1");
+var gameP = document.getElementById("p");
+var optionsUl = document.getElementById("optionsUl");
+var savedInitialsEl = document.getElementById("savedInitials");
+var savedScoreEl = document.getElementById("savedScore");
+var showScoreEl = document.getElementById("showScore");
 
 
 makeUl = document.createElement("ul", {is : "ul"});
@@ -50,8 +53,6 @@ var holdInterval = 0;
 //startBtn.addEventListener("click", makeQuizQuestions);
 
 
-
-
 startBtn.addEventListener("click", function() {
     if (holdInterval === 0) {
         holdInterval = setInterval(function() {
@@ -60,7 +61,7 @@ startBtn.addEventListener("click", function() {
 
             if (secondsLeft <= 0) {
                 clearInterval(holdInterval);
-                allDone();
+                gameOver();
                 timerEl.textContent = "Out of Time!";
             }
         }, 1000);
@@ -68,86 +69,71 @@ startBtn.addEventListener("click", function() {
     makeStuffHappen();
 });
 
-function makeStuffHappen(questionsIndex) {
-
+function makeStuffHappen() {
+    game.innerHTML = "";
     gameH1.innerHTML = "";
     gameP.remove();
+    startBtn.remove();
     optionsUl = "";
-    makeLi = "";
 
     for (var i = 0; i < quizQuestions.length; i++) {
         
         var questionIndex = quizQuestions[i].title;
         var optionsIndex = quizQuestions[i].options;
         gameH1.textContent = questionIndex;
-    }
+    };
     console.log(questionIndex);
     console.log(optionsIndex);
 
-    optionsIndex.forEach(function (newElement) {
+    optionsIndex.forEach(function (newLi) {
+        var optionsUl = document.getElementById("optionsUl");
         var makeLi = document.createElement("li");
-        makeLi.setAttribute("class", "makeLi");
-        makeLi.textContent = optionsIndex;
         optionsUl.appendChild(makeLi);
-        game.appendChild(makeUl);
+        makeLi.textContent = newLi;
         makeLi.addEventListener("click", (isRightNot));
-    })
-
-    // for (var i = 0; i < quizQuestions.length; i++) {
-    //     var questionsIndex = quizQuestions[i].title;
-    //     var optionsIndex = quizQuestions[i].options;
-    //     gameH1.textContent = questionsIndex;
-    //     makeLi.textContent = optionsIndex;
-    // }
-
-    // optionsIndex.forEach(function (newElement) {
-    //     var makeLi = document.createElement("li");
-    //     makeLi.setAttribute("class", "makeLi");
-    //     makeLi.textContent = optionsIndex;
-    //     optionsUl.appendChild(makeLi);
-    //     game.appendChild(makeUl);
-    //     makeLi.addEventListener("click", (isRightNot));
-    // })
-
-    //     optionsIndex.forEach(function (newElement) {
-    //     var makeLi = document.createElement("li");
-    //     makeLi.setAttribute("class", "makeLi");
-    //     makeLi.textContent = optionsIndex;
-    //     optionsUl.appendChild(makeLi);
-    //     game.appendChild(makeUl);
-    //     makeLi.addEventListener("click", (isRightNot));
-    // })
-
-
-
-
-
-    // gameH1.innerHTML = "";
-    // makeUl.innerHTML = "";
-    // gameP.innerHTML = "";
-
-    // for (var i = 0; i < quizQuestions.length; i++) {
-        
-    //     var questionIndex = quizQuestions[i].title;
-    //     var optionsIndex = quizQuestions[i].options;
-    //     gameH1.textContent = questionIndex;
-    // }
-    // console.log(questionIndex);
-    // console.log(optionsIndex);
-    // // stopped right here
-    // optionsIndex.forEach(function (newElement) {
-    //     var makeLi = document.createElement("li");
-    //     makeLi.setAttribute("class", "makeLi");
-    //     makeLi.textContent = optionsIndex;
-    //     optionsUl.appendChild(makeLi);
-    //     game.appendChild(makeUl);
-    //     makeLi.addEventListener("click", (isRightNot));
-    // })
-}
-
-
+    });
 
     
 
- 
+};
+
+function isRightNot(event) {
+    // event.preventDefault();
+
+    var element = event.target;
+    if (element.matches("li")) {
+        if (element.textContent == quizQuestions.answer) {
+            score++
+        } else {
+            score--
+        };
+
+    };
+    
+    
+};
+
+function gameOver() {
+    
+    playGameEl = document.getElementById("playGame");
+    gameOverEl = document.getElementById("gameOver");
+    playGameEl.style.display = "none";
+    gameOverEl.style.display = "block";
+
+    document.getElementById("submitBtn").addEventListener('click', function(event) {
+        event.preventDefaults();
+        var userInitials = document.getElementById("initials");
+        localStorage.setItem("highscoreI", userInitials.value);
+        localStorage.setItem("highscoreS", score);
+  });
+
+    showScoreEl.textContent = score;
+
+    var savedInitials = localStorage.getItem("highscoreI");
+    var savedScore = localStorage.getItem("highscoreS");
+
+    savedInitialsEl.textContent = savedInitials;
+    savedScoreEl.textContent = savedScore;
+
+};
 
