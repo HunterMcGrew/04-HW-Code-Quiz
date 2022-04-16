@@ -135,6 +135,5 @@ function gameOver() {
     savedInitialsEl.textContent = savedInitials;
     savedScoreEl.textContent = savedScore;
 
-}
-
+};
 
