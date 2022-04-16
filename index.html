@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Quiz!</title>
+    <link rel="stylesheet" href="./assets/reset.css">
+    <link rel="stylesheet" href="./assets/style.css">
+ <!--   <link rel="stylesheet" href="./assets/style2.css"> -->
+</head>
+<body>
+    
+    <section id="container">
+        <div id="playGame">
+            <section id="timer"></section>
+            <section id="game"></section>
+                <h1 id="h1">Code Quiz!</h1>
+                <p id="p">See if you can answer the questions!</p>
+            <ul id="optionsUl"></ul>
+            <button id="startBtn">Start!</button>
+        </div>
+
+        <div id="gameOver" style="display: none">
+            <section class="enterHighScore">
+                <form>
+                    <label for="initials">Your Initials</label>
+                    <input type="text" id="initials" name="initials">
+                    <button id="submitBtn" type="submit" name="submit">Submit</button>
+                </form>
+                <br><br>
+                <h3 id="showScore"></h3>
+            </section>
+            <section class="showHighScores">
+                <h3 id="savedInitials"></h3>
+                <h3 id="savedScore"></h3>
+            </section>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+    <script src="./assets/script.js"></script>
+</body>
+</html>

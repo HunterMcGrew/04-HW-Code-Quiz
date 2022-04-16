@@ -1,0 +1,29 @@
+header {
+    width: 96%;
+    text-align: right;
+}
+
+section {
+    width: 96%;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    margin: 5px;
+    padding: 5px;
+    font-size: 16px;
+    border: 2px;
+    border-style: solid;
+}
+
+#timer {
+    text-align: right;
+    font-weight: 700;
+    font-size: 24px;
+}
