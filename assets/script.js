@@ -26,6 +26,7 @@ var quizQuestions = [
         answer: "Stores unchangable data"
     } 
 ];
+
 console.log(quizQuestions[0].answer) 
 // elements from index.html that I'll need 
 var startBtn = document.getElementById("startBtn");
@@ -33,12 +34,12 @@ var timerEl = document.getElementById("timer");
 var game = document.getElementById("game");
 var gameH1 = document.getElementById("h1");
 var gameP = document.getElementById("p");
-var optionsUl = document.getElementById("optionsUl");
+var optionsDiv = document.getElementById("optionsDiv");
 var questions = document.getElementById("questions");
 var savedInitialsEl = document.getElementById("savedInitials");
 var savedScoreEl = document.getElementById("savedScore");
 var showScoreEl = document.getElementById("showScore");
-var currentQuestionIndex = 0;
+
 
 // make elements 
 makeUl = document.createElement("ul");
@@ -46,12 +47,13 @@ makeLi = document.createElement("li");
 makeH1 = document.createElement("h1");
 makeP = document.createElement("p");
 
-// game variables for score and time
-var timeRemaining = 40;
+// game variables for score and time and such
+var timeRemaining = 50;
 var timeDeduction = 10;
 var score = 0;
 var secondsLeft = 40;
 var holdInterval = 0;
+var currentQuestionIndex = 0;
 
 // on start button click, start timer, call makeStuffHappen
 startBtn.addEventListener("click", function() {
@@ -73,20 +75,22 @@ startBtn.addEventListener("click", function() {
 // function to populate questions
 // function makeStuffHappen(questionIndex, optionsIndex, currentQuestion) {
     function makeStuffHappen() {
+    console.log(quizQuestions);
+    console.log(currentQuestionIndex); // logging 4, should be 0
     var currentQuestion = quizQuestions[currentQuestionIndex];
-    var questionTitle = document.getElementsByClassName("question-title");
-    questionTitle.textContent = currentQuestion.title;
-    optionsUl.innerHTML = "";
+    console.log(currentQuestion); 
+    var questionTitle = document.getElementById("questionTitle");
+    questionTitle.textContent = currentQuestion.title; // showing undefined
+    optionsDiv.innerHTML = " "; // clear out div 
 
     currentQuestion.options.forEach(function (option, i) {
         var btnOption = document.createElement("button");
         btnOption.setAttribute("class", "options");
         btnOption.setAttribute("value", option);
         btnOption.textContent = i + 1 + " . " + option;
-        optionsUl.onclick = isRightNot();
-        optionsUl.appendChild(btnOption);
-        
-        
+        // optionsDiv.onclick = isRightNot();
+        optionsDiv.appendChild(btnOption);
+        optionsDiv.addEventListener("click", isRightNot);
 })
 };
 
@@ -138,21 +142,23 @@ startBtn.addEventListener("click", function() {
 
 //     };
 
+    // PROBLEM WITH SCORING ****
 function isRightNot() {
-
-    if (this.value !== quizQuestions[currentQuestionIndex].answer) {
+console.log("isRightNot", quizQuestions[0].answer); // running 5 or 6 times?
+    if (this.textContent !== quizQuestions[currentQuestionIndex].answer) {
         score--;
+        timeRemaining -= timeDeduction;
         currentQuestionIndex++;
     } else {
         score++;
         currentQuestionIndex++
-    }
+    };
 
     if (currentQuestionIndex >= quizQuestions.length) {
         gameOver(); // no more questions? gameOver 
     } else {
         // currentQuestion++;  // add 1 to currentQuestion
-        makeStuffHappen(currentQuestionIndex); // send currentquestion index number to makeStuffHappen
+        makeStuffHappen(); // send currentquestion index number to makeStuffHappen
     }
     
     
