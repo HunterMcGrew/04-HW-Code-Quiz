@@ -27,7 +27,6 @@ var quizQuestions = [
     } 
 ];
 
-console.log(quizQuestions[0].answer) 
 // elements from index.html that I'll need 
 var startBtn = document.getElementById("startBtn");
 var timerEl = document.getElementById("timer");
@@ -39,6 +38,7 @@ var questions = document.getElementById("questions");
 var savedInitialsEl = document.getElementById("savedInitials");
 var savedScoreEl = document.getElementById("savedScore");
 var showScoreEl = document.getElementById("showScore");
+var submitBtn = document.getElementById("submitBtn");
 
 
 // make elements 
@@ -72,11 +72,14 @@ startBtn.addEventListener("click", function() {
     makeStuffHappen(); // call function to populate questions
 });
 
+// var currentQuestion = quizQuestions[currentQuestionIndex];
+
 // function to populate questions
 // function makeStuffHappen(questionIndex, optionsIndex, currentQuestion) {
     function makeStuffHappen() {
+    startBtn.remove();
     console.log(quizQuestions);
-    console.log(currentQuestionIndex); // logging 4, should be 0
+    console.log(currentQuestionIndex); 
     var currentQuestion = quizQuestions[currentQuestionIndex];
     console.log(currentQuestion); 
     var questionTitle = document.getElementById("questionTitle");
@@ -90,7 +93,8 @@ startBtn.addEventListener("click", function() {
         btnOption.textContent = i + 1 + " . " + option;
         // optionsDiv.onclick = isRightNot();
         optionsDiv.appendChild(btnOption);
-        optionsDiv.addEventListener("click", isRightNot);
+        // optionsDiv.addEventListener("click", isRightNot);
+        btnOption.onclick = isRightNot;
 })
 };
 
@@ -141,28 +145,54 @@ startBtn.addEventListener("click", function() {
 //         };
 
 //     };
-
+// var answer = quizQuestions[currentQuestionIndex].answer;
+// console.log(answer);
+console.log("score:", score);
     // PROBLEM WITH SCORING ****
+
 function isRightNot() {
-console.log("isRightNot", quizQuestions[0].answer); // running 5 or 6 times?
-    if (this.textContent !== quizQuestions[currentQuestionIndex].answer) {
-        score--;
-        timeRemaining -= timeDeduction;
-        currentQuestionIndex++;
-    } else {
+// console.log("isRightNot", quizQuestions[currentQuestionIndex].answer); 
+// console.log("isRightNot ANSWER:", answer);
+
+
+    if (this.value === quizQuestions[currentQuestionIndex].answer) {
         score++;
-        currentQuestionIndex++
+        // currentQuestionIndex++;
+    } else {
+        score--;
+        secondsLeft -= timeDeduction;
+        
+        // currentQuestionIndex++;
     };
 
-    if (currentQuestionIndex >= quizQuestions.length) {
+    currentQuestionIndex++
+
+    if (currentQuestionIndex === quizQuestions.length) {
         gameOver(); // no more questions? gameOver 
     } else {
-        // currentQuestion++;  // add 1 to currentQuestion
-        makeStuffHappen(); // send currentquestion index number to makeStuffHappen
+        makeStuffHappen(); 
     }
+    
+    // if (currentQuestionIndex >= quizQuestions.length) {
+    //     gameOver();
+    // } else if (this.textContent === answer) {
+    //      score++;
+    //      currentQuestionIndex++
+    //      makeStuffHappen();
+    // } else  {
+    //     score--;
+    //     currentQuestionIndex++;
+    //     makeStuffHappen();
+    // };
     
     
 };
+
+
+
+    
+//     console.log("score:", score);
+// };
 // console.log(quizQuestions.answer) // undefined
 //
 // currently when clicking on an li element it populates new li elemnts appended to the old ones with the same info in them.
@@ -172,11 +202,14 @@ function gameOver() {
     
     playGameEl = document.getElementById("playGame");
     gameOverEl = document.getElementById("gameOver");
+    savedInitialsEl = document.getElementById("savedInitials");
+    savedScoreEl = document.getElementById("savedScore");
+
     playGameEl.style.display = "none";
     gameOverEl.style.display = "block";
 
-    document.getElementById("submitBtn").addEventListener('click', function(event) {
-        event.preventDefaults();
+    submitBtn.addEventListener('click', function(event) {
+        event.preventDefault();
         var userInitials = document.getElementById("initials");
         localStorage.setItem("highscoreI", userInitials.value);
         localStorage.setItem("highscoreS", score);
