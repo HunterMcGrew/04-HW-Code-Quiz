@@ -125,10 +125,15 @@ function gameOver() {
         var userInitials = document.getElementById("initials");
         localStorage.setItem("highscoreI", userInitials.value);
         localStorage.setItem("highscoreS", score);
+        getHighScores();
   });
 
     showScoreEl.textContent = score;
 
+    getHighScores();
+};
+
+function getHighScores() {
     var savedInitials = localStorage.getItem("highscoreI");
     var savedScore = localStorage.getItem("highscoreS");
     
