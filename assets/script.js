@@ -131,10 +131,17 @@ function gameOver() {
 
     var savedInitials = localStorage.getItem("highscoreI");
     var savedScore = localStorage.getItem("highscoreS");
+    
+    if (savedInitials === null) {
+        savedInitialsEl.textContent = " ";
+    } else {
+        savedInitialsEl.textContent = "Initials: " + savedInitials;
+    };
 
-    savedInitialsEl.textContent = "Initials: " + savedInitials;
-    savedScoreEl.textContent = "Score: " + savedScore;
-
- 
+    if (savedScore === null) {
+        savedScoreEl.textContent = " ";
+    } else {
+        savedScoreEl.textContent = "Score: " + savedScore;
+    };
 
 };
