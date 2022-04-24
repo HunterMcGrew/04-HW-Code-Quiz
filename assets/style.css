@@ -22,8 +22,43 @@ h1, h2, h3, h4, h5, h6, p {
 
 button {
     font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 14px;
+    font-size: 24px;
     color: white;
     background-image: linear-gradient(blue, rgb(1, 154, 255));
 }
 
+.block {
+    display: block;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+}
+
+.intialsInput {
+    font-size: 16px;
+}
+
+.enterHighScore {
+    position: relative;
+    float: left;
+    width: 49%;
+}
+
+.showHighScore {
+    position: relative;
+    float: right;
+    width: 49%;
+}
+
+#container {
+    margin-left: 2%;
+}
+
+#options {
+    display: flex;
+    justify-content: center;
+}
+
+#optionsDiv {
+    text-align: center;
+}
